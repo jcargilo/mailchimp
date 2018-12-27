@@ -37,7 +37,7 @@ class MailchimpApi
         return $this->call('get', "/lists/{$listId}/members/{$memberId}");
     }
 
-    public function addUpdate(string $listId, string $email, array $merge, bool $confirm): array
+    public function addUpdate(string $listId, string $email, bool $confirm, array $merge, array $tags): array
     {
         $email = strtolower($email);
         $memberId = md5($email);
@@ -49,6 +49,9 @@ class MailchimpApi
         // Empty array doesn't work
         if ($merge) {
             $data['merge_fields'] = $merge;
+        }
+        if ($tags) {
+            $data['tags'] = $tags;
         }
         return $this->call('put', "/lists/{$listId}/members/{$memberId}", $data);
     }

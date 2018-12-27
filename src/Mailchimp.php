@@ -62,12 +62,12 @@ class Mailchimp
 
     // Add a member to the list or update an existing member
     // Ensures that existing subscribers are not asked to reconfirm
-    public function subscribe(string $listId, string $email, array $mergeFields = [], bool $confirm = true): array
+    public function subscribe(string $listId, string $email, bool $confirm = true, array $mergeFields = [], array $tags = []): array
     {
         if ($this->status($listId, $email) == 'subscribed') {
             $confirm = false;
         }
-        $result = $this->api->addUpdate($listId, $email, $mergeFields, $confirm);
+        $result = $this->api->addUpdate($listId, $email, $confirm, $mergeFields, $tags);
         return $result ?? [];
     }
 
