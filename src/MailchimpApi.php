@@ -50,18 +50,18 @@ class MailchimpApi
         if ($merge) {
             $data['merge_fields'] = $merge;
         }
-        $this->call('put', "/lists/{$listId}/members/{$memberId}", $data);
+        return $this->call('put', "/lists/{$listId}/members/{$memberId}", $data);
     }
 
     public function addUpdateMember(string $listId, Member $member)
     {
-        $this->call('put', "/lists/{$listId}/members/{$member->hash()}", $member->parameters());
+        return $this->call('put', "/lists/{$listId}/members/{$member->hash()}", $member->parameters());
     }
 
     public function unsubscribe(string $listId, string $email)
     {
         $memberId = md5(strtolower($email));
-        $this->call('put', "/lists/{$listId}/members/{$memberId}", ['email_address' => $email, 'status_if_new' => 'unsubscribed', 'status' => 'unsubscribed']);
+        return $this->call('put', "/lists/{$listId}/members/{$memberId}", ['email_address' => $email, 'status_if_new' => 'unsubscribed', 'status' => 'unsubscribed']);
     }
 
     // HTTP -------------------------------------------------------------------

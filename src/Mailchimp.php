@@ -60,7 +60,8 @@ class Mailchimp
         if ($this->status($listId, $email) == 'subscribed') {
             $confirm = false;
         }
-        $this->api->addUpdate($listId, $email, $mergeFields, $confirm);
+        $result = $this->api->addUpdate($listId, $email, $mergeFields, $confirm);
+        return $result ?? [];
     }
 
     public function addUpdateMember(string $listId, Member $member)
@@ -68,7 +69,8 @@ class Mailchimp
         if ($this->status($listId, $member->parameters()['email_address']) == 'subscribed') {
             $member->confirm(false);
         }
-        $this->api->addUpdateMember($listId, $member);
+        $result = $this->api->addUpdateMember($listId, $member);
+        return $result ?? [];
     }
 
     public function unsubscribe(string $listId, string $email)
@@ -76,7 +78,8 @@ class Mailchimp
         if (!$this->check($listId, $email)) {
             return;
         }
-        $this->api->unsubscribe($listId, $email);
+        $result = $this->api->unsubscribe($listId, $email);
+        return $result ?? [];
     }
 
     // Make an API call directly
