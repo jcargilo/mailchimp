@@ -37,7 +37,7 @@ class MailchimpApi
         return $this->call('get', "/lists/{$listId}/members/{$memberId}");
     }
 
-    public function addUpdate(string $listId, string $email, array $merge, bool $confirm)
+    public function addUpdate(string $listId, string $email, array $merge, bool $confirm): array
     {
         $email = strtolower($email);
         $memberId = md5($email);
@@ -53,12 +53,12 @@ class MailchimpApi
         return $this->call('put', "/lists/{$listId}/members/{$memberId}", $data);
     }
 
-    public function addUpdateMember(string $listId, Member $member)
+    public function addUpdateMember(string $listId, Member $member): array
     {
         return $this->call('put', "/lists/{$listId}/members/{$member->hash()}", $member->parameters());
     }
 
-    public function unsubscribe(string $listId, string $email)
+    public function unsubscribe(string $listId, string $email): array
     {
         $memberId = md5(strtolower($email));
         return $this->call('put', "/lists/{$listId}/members/{$memberId}", ['email_address' => $email, 'status_if_new' => 'unsubscribed', 'status' => 'unsubscribed']);

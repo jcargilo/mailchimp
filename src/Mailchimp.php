@@ -19,6 +19,13 @@ class Mailchimp
         $this->api = $api;
     }
 
+    // Get information for specified list
+    public function getList($listId): array
+    {
+        $results = $this->api->getList($listId);
+        return $results ?? [];
+    }
+
     // Gets all available lists
     public function getLists(): array
     {
@@ -55,7 +62,7 @@ class Mailchimp
 
     // Add a member to the list or update an existing member
     // Ensures that existing subscribers are not asked to reconfirm
-    public function subscribe(string $listId, string $email, array $mergeFields = [], bool $confirm = true)
+    public function subscribe(string $listId, string $email, array $mergeFields = [], bool $confirm = true): array
     {
         if ($this->status($listId, $email) == 'subscribed') {
             $confirm = false;
@@ -64,7 +71,7 @@ class Mailchimp
         return $result ?? [];
     }
 
-    public function addUpdateMember(string $listId, Member $member)
+    public function addUpdateMember(string $listId, Member $member): array
     {
         if ($this->status($listId, $member->parameters()['email_address']) == 'subscribed') {
             $member->confirm(false);
@@ -73,10 +80,10 @@ class Mailchimp
         return $result ?? [];
     }
 
-    public function unsubscribe(string $listId, string $email)
+    public function unsubscribe(string $listId, string $email): array
     {
         if (!$this->check($listId, $email)) {
-            return;
+            return [];
         }
         $result = $this->api->unsubscribe($listId, $email);
         return $result ?? [];
