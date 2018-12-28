@@ -20,7 +20,7 @@ class Mailchimp
     }
 
     // Get information for specified list
-    public function getList($listId): array
+    public function getList(string $listId): array
     {
         $results = $this->api->getList($listId);
         return $results ?? [];
@@ -32,7 +32,7 @@ class Mailchimp
         $results = $this->api->getLists();
         return $results['lists'] ?? [];
     }
-
+        
      // Determines the status of a subscriber
      // Possible responses: 'subscribed', 'unsubscribed', 'cleaned', 'pending', 'transactional' or 'not found'
     public function status(string $listId, string $email): string
