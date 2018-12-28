@@ -18,6 +18,16 @@ class Member
         $this->parameters['status_if_new'] = 'pending'; // Double-opt-in is default
     }
 
+    public function email_address(string $email): Member
+    {
+        $email = strtolower(trim($email));
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new \InvalidArgumentException("Invalid email address");
+        }
+        $this->parameters['email_address'] = $email;
+        return $this;
+    }
+
     public function email_type(string $type): Member
     {
         if (!in_array($type, ['html', 'text'])) {
@@ -47,6 +57,12 @@ class Member
     public function merge_fields(array $merge): Member
     {
         $this->parameters['merge_fields'] = $merge;
+        return $this;
+    }
+
+    public function tags(array $tags): Member
+    {
+        $this->parameters['tags'] = $tags;
         return $this;
     }
 
