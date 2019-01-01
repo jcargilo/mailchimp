@@ -4,7 +4,6 @@ class Member
 {
     /** @var string */
     private $subscriber_hash;
-
     private $parameters;
 
     public function __construct(string $email)
@@ -93,32 +92,6 @@ class Member
         $this->parameters['location']['longitude'] = $longitude;
         return $this;
     }
-
-    // Appears as though these parameters cannot be set via the API,
-    // do they only relate to Mailchimp's own forms?
-//    public function ip_signup(string $ip): Member
-//    {
-//        $this->parameters['ip_signup'] = $ip;
-//        return $this;
-//    }
-//
-//    public function timestamp_signup(string $timestamp): Member
-//    {
-//        $this->parameters['timestamp_signup'] = $timestamp;
-//        return $this;
-//    }
-//
-//    public function ip_opt(string $ip): Member
-//    {
-//        $this->parameters['ip_opt'] = $ip;
-//        return $this;
-//    }
-//
-//    public function timestamp_opt(string $timestamp): Member
-//    {
-//        $this->parameters['timestamp_opt'] = $timestamp;
-//        return $this;
-//    }
 
     public function hash(): string
     {
