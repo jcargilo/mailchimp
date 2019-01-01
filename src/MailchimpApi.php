@@ -32,9 +32,40 @@ class MailchimpApi
         return $this->call('get', '/lists/' . $listId);
     }
 
+    public function getListSegments(string $listId): array
+    {
+        return $this->call('get', "/lists/{$listId}/segments");
+    }
+
+    public function createSegment(string $listId, string $name): array
+    {
+        $data = [
+            'name' => $name
+        ];
+        return $this->call('post', "/lists/{$listId}/segments", $data);
+    }
+
     public function getMember(string $listId, string $memberId): array
     {
         return $this->call('get', "/lists/{$listId}/members/{$memberId}");
+    }
+
+    public function getMemberTags(string $listId, string $subscriber_hash): array
+    {
+        return $this->call('get', "/lists/{$listId}/members/{$subscriber_hash}/tags");
+    }
+
+    public function addMemberTag(string $listId, string $segment_id, string $email)
+    {
+        $data = [
+            'email_address' => $email
+        ];
+        return $this->call('post', "/lists/{$listId}/segments/{$segment_id}/members", $data);
+    }
+
+    public function removeMemberTag(string $listId, string $segment_id, string $subscriber_hash)
+    {
+        return $this->call('delete', "/lists/{$listId}/segments/{$segment_id}/members/{$subscriber_hash}");
     }
 
     public function addUpdate(string $listId, string $email, bool $confirm, array $merge, array $tags): array
